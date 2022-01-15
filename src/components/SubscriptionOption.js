@@ -1,12 +1,15 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-export default function Subscription(props) {
+export default function SubscriptionOption(props) {
   return (
-    ''
+    <StyledLink to={'/subscription/' + props.id}>
+      <img src={props.image} alt='Driven Plus' />
+      <p>R$ {props.price}</p>
+    </StyledLink>
   );
 }
-const Container = styled.div`
+const StyledLink = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,6 +22,8 @@ const Container = styled.div`
 
   gap: 20px;
   margin: 10px 0;
+  text-decoration: none;
+
   p {
     font-size: 24px;
     font-weight: 700;

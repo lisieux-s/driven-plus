@@ -5,12 +5,15 @@ import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router';
 
 import DRIVENPLUS from '../assets/DRIVENPLUS.png';
+import TokenContext from '../contexts/TokenContext';
 
 export default function Login() {
     const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const {token, setToken} = useContext(TokenContext);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -22,13 +25,14 @@ export default function Login() {
       }
     );
     pLogin.then(res => {
+      setToken(res.data.token)
         if(res.data.membership === null) {
             navigate('/subscriptions')
         } else {
             navigate('/home')
         }
     })
-    pLogin.catch(res => console.log(res))
+    pLogin.catch(res => alert('Ocorreu um erro: ' + res))
   }
     
   return (
