@@ -1,7 +1,12 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import SubscriptionContext from '../contexts/SubscriptionsContext';
+
 export default function SubscriptionOption(props) {
+  const { subscription, setSubscription } = useContext(SubscriptionContext);
+
   return (
     <StyledLink to={'/subscription/' + props.id}>
       <img src={props.image} alt='Driven Plus' />

@@ -1,12 +1,14 @@
 import { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+
 import SubscriptionOption from './SubscriptionOption';
 
 import TokenContext from '../contexts/TokenContext';
+import SubscriptionsContext from '../contexts/SubscriptionsContext';
 
 export default function Subscriptions() {
-  const [subscriptionOptions, setSubscriptionOptions] = useState(null);
+  const [ subscriptions, setSubscriptions ] = useState(null);
   const { token, setToken } = useContext(TokenContext);
   const config = {
     headers: { Authorization: `Bearer ${token}` },
@@ -14,23 +16,22 @@ export default function Subscriptions() {
   useEffect(() => {
     if (token === null) return;
 
-    const pSubscriptionOptions = axios.get(
+    const pSubscriptions = axios.get(
       'https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships',
       config
     );
-    pSubscriptionOptions.then((res) => {
-      setSubscriptionOptions(res.data);
-      console.log(res.data);
+    pSubscriptions.then((res) => {
+      setSubscriptions(res.data);
     });
-    pSubscriptionOptions.catch((res) => console.log(res));
+    pSubscriptions.catch((res) => console.log(res));
   }, [token]);
 
   return (
     <>
       <Title>Escolha seu plano</Title>
-      {!subscriptionOptions
-        ? 'perae'
-        : subscriptionOptions.map((subscriptionOption) => (
+      {!subscriptions
+        ? ''
+        : subscriptions.map((subscriptionOption) => (
             <SubscriptionOption {...subscriptionOption} />
           ))}
     </>
