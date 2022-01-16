@@ -20,6 +20,11 @@ export default function Subscription() {
 
   const [subscription, setSubscription] = useState(null);
 
+  const [cardName, setCardName] = useState('');
+  const [cardNumber, setCardNumber] = useState('');
+  const [securityNumber, setSecurityNumber] = useState('');
+  const [expirationDate, setExpirationDate] = useState('');
+
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
@@ -33,8 +38,7 @@ export default function Subscription() {
       width: '248px',
       height: '210px',
       margin: '0 auto',
-      top: '229px'
-  
+      top: '229px',
     },
   };
 
@@ -65,7 +69,19 @@ export default function Subscription() {
   }
 
   function handleConfirm() {
-
+    const pSubscribe = axios.post(
+      'https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions',
+      {
+        membershipId: ID,
+        cardName: cardName,
+        cardNumber: cardNumber,
+        securityNumber: securityNumber,
+        expirationDate: expirationDate
+      },
+      config
+    );
+    pSubscribe.then((res) => console.log(res));
+    pSubscribe.catch((res) => console.log(res));
   }
 
   return !subscription ? (
@@ -89,11 +105,31 @@ export default function Subscription() {
       </span>
       <p>R$ {subscription.price} cobrados mensalmente</p>
       <form onSubmit={handleSubmit}>
-        <input type='text' placeholder='Nome impresso no cartão' />
-        <input type='text' placeholder='Digitos do cartão' />
+        <input
+          type='text'
+          placeholder='Nome impresso no cartão'
+          value={cardName}
+          onChange={(e) => setCardName(e.target.value)}
+        />
+        <input
+          type='text'
+          placeholder='Digitos do cartão'
+          value={cardNumber}
+          onChange={(e) => setCardNumber(e.target.value)}
+        />
         <span>
-          <input type='password' placeholder='Código de segurança' />
-          <input type='text' placeholder='Validade' />
+          <input
+            type='password'
+            placeholder='Código de segurança'
+            value={securityNumber}
+            onChange={(e) => setSecurityNumber(e.target.value)}
+          />
+          <input
+            type='text'
+            placeholder='Validade'
+            value={expirationDate}
+            onChange={(e) => setExpirationDate(e.target.value)}
+          />
         </span>
         <button onClick={handleOpenModal}>ASSINAR</button>
       </form>
@@ -189,36 +225,33 @@ const Yes = styled.button`
 `;
 
 const ModalContainer = styled.div`
-
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  p {
+    margin-top: 22px;
+    color: #000000;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+  }
+  button {
+    width: 95px;
+    height: 52px;
+    border: 0;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 700;
+  }
+  span {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    gap: 20px;
-    p {
-      margin-top: 22px;
-      color: #000000;
-      font-size: 18px;
-      font-weight: 700;
-      text-align: center;
-      padding: 0;
-      margin: 0;
-    }
-    button {
-      width: 95px;
-      height: 52px;
-      border: 0;
-      border-radius: 8px;
-      color: #fff;
-      font-weight: 700;
-    }
-    span {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      padding: 0;
-      margin: 0;
-
-    }
-  
-`
+    gap: 14px;
+    padding: 0;
+    margin: 0;
+  }
+`;
