@@ -7,15 +7,18 @@ import Subscriptions from './components/Subscriptions';
 import Subscription from './components/Subscription';
 import Home from './components/Home';
 
+import UserContext from './contexts/UserContext'
 import TokenContext from './contexts/TokenContext';
 import SubscriptionsContext from './contexts/SubscriptionsContext';
 
 export default function App() {
   const [token, setToken] = useState(null);
   const [subscriptions, setSubscriptions] = useState(null);
+  const [user, setUser] = useState(null);
 
   return (
-    <TokenContext.Provider value={{ token, setToken }}>
+    <UserContext.Provider value={{user, setUser}}>
+      <TokenContext.Provider value={{ token, setToken }}>
       <SubscriptionsContext.Provider value={{ subscriptions, setSubscriptions }}>
         <BrowserRouter>
           <Routes>
@@ -28,5 +31,6 @@ export default function App() {
         </BrowserRouter>
       </SubscriptionsContext.Provider>
     </TokenContext.Provider>
+    </UserContext.Provider>
   );
 }
