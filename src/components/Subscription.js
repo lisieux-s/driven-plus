@@ -1,5 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
+
+import Modal from 'react-modal';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -7,9 +9,12 @@ import perks from '../assets/perks.png';
 import price from '../assets/price.png';
 
 import TokenContext from '../contexts/TokenContext';
-import SubscriptionsContext from '../contexts/SubscriptionsContext';
+
+Modal.setAppElement('.root');
 
 export default function Subscription() {
+  const [modalOpen, setModalOpen] = useState(false);
+
   const { ID } = useParams();
   const { token, setToken } = useContext(TokenContext);
 
@@ -17,6 +22,20 @@ export default function Subscription() {
 
   const config = {
     headers: { Authorization: `Bearer ${token}` },
+  };
+
+  const customStyles = {
+    overlay: {
+      backgroundColor: '#000000b2',
+    },
+    content: {
+      borderRadius: '12px',
+      width: '248px',
+      height: '210px',
+      margin: '0 auto',
+      top: '229px'
+  
+    },
   };
 
   useEffect(() => {
@@ -35,6 +54,18 @@ export default function Subscription() {
 
   function handleSubmit(e) {
     e.preventDefault();
+  }
+
+  function handleOpenModal() {
+    setModalOpen(true);
+  }
+
+  function handleCloseModal() {
+    setModalOpen(false);
+  }
+
+  function handleConfirm() {
+
   }
 
   return !subscription ? (
@@ -61,17 +92,36 @@ export default function Subscription() {
         <input type='text' placeholder='Nome impresso no cartão' />
         <input type='text' placeholder='Digitos do cartão' />
         <span>
-          <input type='password' placeholder='Código de segurança'/>
-          <input type='text' placeholder='Validade'/>
+          <input type='password' placeholder='Código de segurança' />
+          <input type='text' placeholder='Validade' />
         </span>
-        <button>ASSINAR</button>
+        <button onClick={handleOpenModal}>ASSINAR</button>
       </form>
+
+      <Modal
+        isOpen={modalOpen}
+        onRequestClose={handleCloseModal}
+        style={customStyles}
+        centered
+      >
+        <ModalContainer>
+          <p>
+            Tem certeza que deseja assinar o plano {subscription.name} (R${' '}
+            {subscription.price})?
+          </p>
+          <span>
+            <No onClick={handleCloseModal}>Não</No>
+            <Yes onClick={handleConfirm}>SIM</Yes>
+          </span>
+        </ModalContainer>
+      </Modal>
     </Container>
   );
 }
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
 
   color: #fff;
@@ -113,12 +163,12 @@ const Container = styled.div`
       gap: 9px;
     }
     button {
-      background: #FF4791;
+      background: #ff4791;
       border: 0;
       border-radius: 8px;
       width: 100%;
       height: 52px;
-      
+
       color: #fff;
       font-weight: 700;
     }
@@ -130,5 +180,46 @@ const Container = styled.div`
     border-radius: 8px;
     padding: 14px;
   }
-  
 `;
+
+const No = styled.button`
+  background: #cecece;
+`;
+const Yes = styled.button`
+  background: #ff4791;
+`;
+
+const ModalContainer = styled.div`
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    p {
+      margin-top: 22px;
+      color: #000000;
+      font-size: 18px;
+      font-weight: 700;
+      text-align: center;
+      padding: 0;
+      margin: 0;
+    }
+    button {
+      width: 95px;
+      height: 52px;
+      border: 0;
+      border-radius: 8px;
+      color: #fff;
+      font-weight: 700;
+    }
+    span {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      padding: 0;
+      margin: 0;
+
+    }
+  
+`
