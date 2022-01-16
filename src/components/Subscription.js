@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Modal from 'react-modal';
 import styled from 'styled-components';
@@ -13,6 +14,8 @@ import TokenContext from '../contexts/TokenContext';
 Modal.setAppElement('.root');
 
 export default function Subscription() {
+  const navigate = useNavigate();
+
   const [modalOpen, setModalOpen] = useState(false);
 
   const { ID } = useParams();
@@ -80,7 +83,9 @@ export default function Subscription() {
       },
       config
     );
-    pSubscribe.then((res) => console.log(res));
+    pSubscribe.then((res) => {
+      navigate('/home')
+    });
     pSubscribe.catch((res) => console.log(res));
   }
 
