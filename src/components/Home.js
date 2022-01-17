@@ -24,7 +24,6 @@ export default function Home() {
   };
 
   useEffect(() => {
-    console.log(subscription)
     if (token === null) return;
 
     const pSubscription = axios.get(
@@ -32,7 +31,7 @@ export default function Home() {
         user.membership.id,
       config
     );
-    pSubscription.then(res => console.log(res.data));
+    pSubscription.then();
     pSubscription.catch();
   }, [token]);
 
@@ -42,7 +41,6 @@ export default function Home() {
       config
     );
     pCancel.then(res => {
-      console.log(res.data);
       navigate('/subscriptions')
     });
   }

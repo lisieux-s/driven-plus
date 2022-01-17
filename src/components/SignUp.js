@@ -20,8 +20,8 @@ export default function SignUp() {
         password,
       }
     );
-    pSignUp.then((res) => console.log(res));
-    pSignUp.catch((res) => console.log(res));
+    pSignUp.then();
+    pSignUp.catch((res) => alert(res));
   }
 
   return (

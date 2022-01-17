@@ -8,6 +8,7 @@ import DRIVENPLUS from '../assets/DRIVENPLUS.png';
 
 import TokenContext from '../contexts/TokenContext';
 import UserContext from '../contexts/UserContext';
+import SubscriptionContext from '../contexts/SubscriptionContext';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -17,6 +18,7 @@ export default function Login() {
 
   const {token, setToken} = useContext(TokenContext);
   const {user, setUser} = useContext(UserContext);
+  const {subscription, setSubscription} = useContext(SubscriptionContext);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -30,13 +32,14 @@ export default function Login() {
     pLogin.then(res => {
       setToken(res.data.token)
       setUser(res.data)
+      setSubscription(res.data.membership)
         if(res.data.membership === null) {
             navigate('/subscriptions')
         } else {
             navigate('/home')
         }
     })
-    pLogin.catch(res => alert('Ocorreu um erro: ' + res))
+    pLogin.catch(res => alert('Ocorreu um erro. ' + res))
   }
     
   return (

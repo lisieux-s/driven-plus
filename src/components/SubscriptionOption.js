@@ -5,7 +5,7 @@ export default function SubscriptionOption(props) {
 
   return (
     <StyledLink to={'/subscription/' + props.id}>
-      <img src={props.image} alt='Driven Plus' />
+      <img src={props.image} alt='Driven+' />
       <p>R$ {props.price}</p>
     </StyledLink>
   );

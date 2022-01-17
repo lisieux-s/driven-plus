@@ -22,7 +22,7 @@ export default function Subscriptions() {
     pSubscriptions.then((res) => {
       setSubscriptions(res.data);
     });
-    pSubscriptions.catch((res) => console.log(res));
+    pSubscriptions.catch();
   }, [token]);
 
   return (

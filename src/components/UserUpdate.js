@@ -1,98 +1,104 @@
 import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import UserContext from '../contexts/UserContext';
 import TokenContext from '../contexts/TokenContext';
 
 import axios from 'axios';
 import styled from 'styled-components';
 
+import arrow from '../assets/arrow-back.png';
+
 export default function User() {
+  const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const { token, setToken } = useContext(TokenContext);
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
 
-  const [disabled, setDisabled] = useState(true);
-  const [update, setUpdate] = useState(false);
-
   const [name, setName] = useState('');
-  const [cpf, setCpf] = useState('');
-  const [email, setEmail] = useState('');
+  const [cpf, setCpf] = useState(user.cpf);
+  const [email, setEmail] = useState();
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState(currentPassword);
 
-  function handleUpdate(e) {
-    e.preventDefault();
-
-    setUpdate(true);
-    setDisabled(false);
-  }
   function handleSubmit(e) {
     e.preventDefault();
 
-    const pSubmit = axios.put(
-      'https://mock-api.driven.com.br/api/v4/driven-plus/users/',
-      {
-        name,
-        cpf,
-        email,
-        currentPassword,
-        newPassword,
-      },
-      config
-    );
-    pSubmit.then((res) => console.log(res));
-    pSubmit.catch();
+    if (newPassword === '') {
+      const pSubmit = axios.put(
+        'https://mock-api.driven.com.br/api/v4/driven-plus/users/',
+        {
+          name,
+          cpf,
+          email,
+          currentPassword,
+        },
+        config
+      );
+      pSubmit.then();
+      pSubmit.catch((res) => alert(res));
+    } else {
+      const pSubmit = axios.put(
+        'https://mock-api.driven.com.br/api/v4/driven-plus/users/',
+        {
+          name,
+          cpf,
+          email,
+          currentPassword,
+          newPassword,
+        },
+        config
+      );
+      pSubmit.then();
+      pSubmit.catch((res) => alert(res));
+    }
   }
 
   return (
-    
     <Container>
-      {console.log(user)}
       <form onSubmit={handleSubmit}>
         <input
           type='text'
           placeholder={user.name}
           value={name}
           onChange={(e) => setName(e.target.value)}
-          disabled={disabled}
         />
         <input
           type='text'
           placeholder={user.cpf}
           value={cpf}
           onChange={(e) => setCpf(e.target.value)}
-          disabled={true}
+          disabled
         />
         <input
           type='text'
           placeholder={user.email}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          disabled={disabled}
         />
-        {!update ? (
-          <button onClick={handleUpdate}>ATUALIZAR</button>
-        ) : (
-          <>
-            <input
-              type='text'
-              placeholder='Senha atual'
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
-              disabled={disabled}
-            />
-            <input
-              type='text'
-              placeholder='Nova senha'
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              disabled={disabled}
-            />
-            <button onClick={handleSubmit}>SALVAR</button>
-          </>
-        )}
+        <input
+          type='text'
+          placeholder='Senha atual'
+          value={currentPassword}
+          onChange={(e) => setCurrentPassword(e.target.value)}
+          required
+        />
+        <input
+          type='text'
+          placeholder='Nova senha'
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
+        />
+        <button>SALVAR</button>
       </form>
+      <img
+        className='arrow'
+        src={arrow}
+        alt='go back'
+        onClick={() => navigate(`/users/${user.id}`)}
+      />
     </Container>
   );
 }
@@ -127,5 +133,11 @@ const Container = styled.div`
   }
   input[disabled] {
     background: #ebebeb;
+  }
+  .arrow {
+    position: fixed;
+    top: 24.35px;
+    left: 22px;
+    height: 27.29px;
   }
 `;

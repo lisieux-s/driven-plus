@@ -58,7 +58,7 @@ export default function Subscription() {
     pSubscription.then((res) => {
       setSubscription(res.data);
     });
-    pSubscription.catch((res) => console.log(res));
+    pSubscription.catch();
   }, [token]);
 
   function handleSubmit(e) {
@@ -86,10 +86,9 @@ export default function Subscription() {
       config
     );
     pSubscribe.then((res) => {
-      setSubscription(res.data)
       navigate('/home')
     });
-    pSubscribe.catch((res) => console.log(res));
+    pSubscribe.catch(res => alert(res));
   }
 
   return !subscription ? (

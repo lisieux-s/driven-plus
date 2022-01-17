@@ -1,3 +1,3 @@
 import { createContext } from "react";
-const SubscriptionsContext = createContext();
-export default SubscriptionsContext;
+const SubscriptionContext = createContext();
+export default SubscriptionContext;
