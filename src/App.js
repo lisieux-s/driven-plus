@@ -6,6 +6,7 @@ import SignUp from './components/SignUp';
 import Subscriptions from './components/Subscriptions';
 import Subscription from './components/Subscription';
 import Home from './components/Home';
+import User from './components/User';
 
 import UserContext from './contexts/UserContext'
 import TokenContext from './contexts/TokenContext';
@@ -27,6 +28,7 @@ export default function App() {
             <Route path='/subscriptions' element={<Subscriptions />} />
             <Route path='/subscription/:ID' element={<Subscription />} />
             <Route path='/home' element={<Home />} />
+            <Route path='/users/:userID' element={<User />} />
           </Routes>
         </BrowserRouter>
       </SubscriptionsContext.Provider>

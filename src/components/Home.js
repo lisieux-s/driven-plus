@@ -43,7 +43,7 @@ export default function Home() {
   return (
     <Container>
       <Logo src={user.membership.image} />
-      <User src={userIcon} />
+      <User onClick={() => navigate(`/users/${user.id}`)} src={userIcon} />
 
       <Buttons>
         <div className='perks'>
@@ -65,6 +65,7 @@ export default function Home() {
     </Container>
   );
 }
+
 const Container = styled.div`
   color: #fff;
 
