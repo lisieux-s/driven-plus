@@ -8,8 +8,11 @@ import axios from 'axios';
 
 import perks from '../assets/perks.png';
 import price from '../assets/price.png';
+import x from '../assets/x.png';
+import arrow from '../assets/arrow-back.png'
 
 import TokenContext from '../contexts/TokenContext';
+import UserContext from '../contexts/UserContext';
 
 Modal.setAppElement('.root');
 
@@ -20,6 +23,7 @@ export default function Subscription() {
 
   const { ID } = useParams();
   const { token, setToken } = useContext(TokenContext);
+  const { user, setUser } = useContext(UserContext);
 
   const [subscription, setSubscription] = useState(null);
 
@@ -137,6 +141,7 @@ export default function Subscription() {
           />
         </span>
         <button onClick={handleOpenModal}>ASSINAR</button>
+        <img className='arrow' src={arrow} alt='go back' onClick={() => navigate('/subscriptions')}/>
       </form>
 
       <Modal
@@ -154,6 +159,7 @@ export default function Subscription() {
             <No onClick={handleCloseModal}>Não</No>
             <Yes onClick={handleConfirm}>SIM</Yes>
           </span>
+          <X src={x} alt='close' onClick={handleCloseModal}/>
         </ModalContainer>
       </Modal>
     </Container>
@@ -169,6 +175,12 @@ const Container = styled.div`
   img {
     height: 95px;
     align-self: center;
+  }
+  .arrow {
+    position: fixed;
+    top: 24.35px;
+    left: 22px;
+    height: 27.29px;
   }
   h1 {
     font-size: 32px;
@@ -260,3 +272,10 @@ const ModalContainer = styled.div`
     margin: 0;
   }
 `;
+
+const X = styled.img`
+  position: fixed;
+  top: 25.75px;
+  right: 20px;
+`
+

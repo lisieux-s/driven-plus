@@ -28,9 +28,9 @@ export default function Home() {
         user.membership.id,
       config
     );
-    pSubscription.then((res) => {});
-    pSubscription.catch((res) => console.log(res));
-  }, [token]);
+    pSubscription.then();
+    pSubscription.catch();
+  }, [user]);
 
   function handleCancel() {
     const pCancel = axios.delete(
@@ -79,6 +79,7 @@ const Logo = styled.img`
   position: fixed;
   top: 32px;
   left: 38px;
+  height: 50.8px;
 `;
 const User = styled.img`
   position: fixed;
