@@ -1,1 +1,1 @@
-Membership app for the Driven Plus services.
+Membership app for Driven Plus services.
