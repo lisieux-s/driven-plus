@@ -12,7 +12,7 @@ import x from '../assets/x.png';
 import arrow from '../assets/arrow-back.png'
 
 import TokenContext from '../contexts/TokenContext';
-import UserContext from '../contexts/UserContext';
+import SubscriptionContext from '../contexts/SubscriptionContext';
 
 Modal.setAppElement('.root');
 
@@ -23,9 +23,7 @@ export default function Subscription() {
 
   const { ID } = useParams();
   const { token, setToken } = useContext(TokenContext);
-  const { user, setUser } = useContext(UserContext);
-
-  const [subscription, setSubscription] = useState(null);
+  const { subscription, setSubscription } = useContext(SubscriptionContext);
 
   const [cardName, setCardName] = useState('');
   const [cardNumber, setCardNumber] = useState('');
@@ -88,6 +86,7 @@ export default function Subscription() {
       config
     );
     pSubscribe.then((res) => {
+      setSubscription(res.data)
       navigate('/home')
     });
     pSubscribe.catch((res) => console.log(res));

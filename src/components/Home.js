@@ -4,23 +4,27 @@ import { useContext, useEffect } from 'react';
 
 import TokenContext from '../contexts/TokenContext';
 import UserContext from '../contexts/UserContext';
+import SubscriptionContext from '../contexts/SubscriptionContext';
 
 import styled from 'styled-components';
 import axios from 'axios';
 
 import userIcon from '../assets/user.png';
 
+
 export default function Home() {
   const navigate = useNavigate();
 
   const { token, setToken } = useContext(TokenContext);
   const { user, setUser } = useContext(UserContext);
+  const { subscription, setSubscription } = useContext(SubscriptionContext)
 
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
 
   useEffect(() => {
+    console.log(subscription)
     if (token === null) return;
 
     const pSubscription = axios.get(
@@ -28,21 +32,25 @@ export default function Home() {
         user.membership.id,
       config
     );
-    pSubscription.then();
+    pSubscription.then(res => console.log(res.data));
     pSubscription.catch();
-  }, [user]);
+  }, [token]);
 
   function handleCancel() {
     const pCancel = axios.delete(
       'https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions',
       config
     );
-    pCancel.then(navigate('/subscriptions'));
+    pCancel.then(res => {
+      console.log(res.data);
+      navigate('/subscriptions')
+    });
   }
   if (!user) return '';
   return (
     <Container>
-      <Logo src={user.membership.image} />
+      <Logo src={subscription.image
+      } />
       <User onClick={() => navigate(`/users/${user.id}`)} src={userIcon} />
 
       <Buttons>
@@ -50,13 +58,13 @@ export default function Home() {
           <div>
             <p>Olá, {user.name}</p>
           </div>
-          {user.membership.perks.map((perk) => (
+          {subscription.perks.map((perk) => (
             <a href={perk.link}>{perk.title}</a>
           ))}
         </div>
 
         <div className='manage'>
-          <button>Mudar Plano</button>
+          <button onClick={handleCancel}> Mudar Plano</button>
           <button className='cancel' onClick={handleCancel}>
             Cancelar Plano
           </button>

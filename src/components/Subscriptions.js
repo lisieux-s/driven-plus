@@ -5,7 +5,6 @@ import axios from 'axios';
 import SubscriptionOption from './SubscriptionOption';
 
 import TokenContext from '../contexts/TokenContext';
-import SubscriptionsContext from '../contexts/SubscriptionsContext';
 
 export default function Subscriptions() {
   const [ subscriptions, setSubscriptions ] = useState(null);

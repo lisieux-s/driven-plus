@@ -10,17 +10,17 @@ import User from './components/User';
 
 import UserContext from './contexts/UserContext'
 import TokenContext from './contexts/TokenContext';
-import SubscriptionsContext from './contexts/SubscriptionsContext';
+import SubscriptionContext from './contexts/SubscriptionContext';
 
 export default function App() {
   const [token, setToken] = useState(null);
-  const [subscriptions, setSubscriptions] = useState(null);
+  const [subscription, setSubscription] = useState(null);
   const [user, setUser] = useState(null);
 
   return (
     <UserContext.Provider value={{user, setUser}}>
       <TokenContext.Provider value={{ token, setToken }}>
-      <SubscriptionsContext.Provider value={{ subscriptions, setSubscriptions }}>
+      <SubscriptionContext.Provider value={{ subscription, setSubscription }}>
         <BrowserRouter>
           <Routes>
             <Route path='/' element={<Login />} />
@@ -28,10 +28,10 @@ export default function App() {
             <Route path='/subscriptions' element={<Subscriptions />} />
             <Route path='/subscription/:ID' element={<Subscription />} />
             <Route path='/home' element={<Home />} />
-            <Route path='/users/:userID' element={<User />} />
+            <Route path='/users/:id' element={<User />} />
           </Routes>
         </BrowserRouter>
-      </SubscriptionsContext.Provider>
+      </SubscriptionContext.Provider>
     </TokenContext.Provider>
     </UserContext.Provider>
   );
