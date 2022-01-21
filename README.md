@@ -1,1 +1,1 @@
-Membership app for Driven Plus services.
+A React app for Driven Plus membership services.
