@@ -5,7 +5,7 @@ This app includes the following features:
 * Login
 * Sign up
 * Subscription plans
-* For members: Homepage, where you can access:
+* For members: Homepage where you can access:
   * Links to exclusive content
   * User information (with the availability for updating it)
   * Subscription management (membership change or cancellation)
